@@ -2,10 +2,24 @@ import { Component } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-class MyCard extends Component {
+class SingleBook extends Component {
+  state = {
+    selected: false,
+  };
+
+  switchState = () => {
+    this.setState({ selected: !this.state.selected });
+  };
+
   render() {
     return (
-      <Card>
+      <Card
+        className="mb-3"
+        style={
+          this.state.selected ? { border: "2px solid lightblue", backgroundColor: "lightblue" } : { border: "none" }
+        }
+        onClick={this.switchState}
+      >
         <div className="overflow-hidden" style={{ height: "300px" }}>
           <Card.Img variant="top" src={this.props.img} />
         </div>
@@ -19,4 +33,4 @@ class MyCard extends Component {
   }
 }
 
-export default MyCard;
+export default SingleBook;

@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import MyFooter from "./components/MyFooter";
 import Welcome from "./components/Welcome";
 import AllTheBooks from "./components/AllTheBooks";
-import Genre from "./components/Genre";
 
 function App() {
   return (

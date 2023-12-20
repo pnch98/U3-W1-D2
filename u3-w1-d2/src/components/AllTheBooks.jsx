@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Container, FormControl, FormGroup, Row } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import fantasy from "../data/books/fantasy.json";
@@ -8,31 +8,45 @@ import horror from "../data/books/horror.json";
 import romance from "../data/books/romance.json";
 import scifi from "../data/books/scifi.json";
 import Genre from "./Genre";
-import MyCard from "./MyCard";
+import SingleBook from "./SingleBook";
 
 class AllTheBooks extends Component {
   state = {
     data: fantasy,
+    searchValue: "",
   };
   handleDataChange = (data) => {
     this.setState({ data });
-    console.log(this.state.data);
+  };
+  handleSearch = (value) => {
+    this.setState({ searchValue: value });
   };
 
   render() {
     return (
       <>
-        <Genre data={this.state.data} onDataChange={this.handleDataChange} />
+        <div className="container d-flex justify-content-between align-items-baseline my-3">
+          <Genre data={this.state.data} onDataChange={this.handleDataChange} />
+          <FormGroup controlId="searchFormId">
+            <FormControl
+              style={{ maxWidth: "300px", height: "40px" }}
+              type="text"
+              placeholder="Cerca"
+              value={this.state.searchValue}
+              onChange={(event) => this.handleSearch(event.target.value)}
+            />
+          </FormGroup>
+        </div>
 
         <Container>
           <Row xs={2} lg={4}>
-            {this.state.data.map((book) => {
-              return (
-                <Col>
-                  <MyCard img={book.img} title={book.title} price={book.price} />;
+            {this.state.data
+              .filter((book) => book.title.toLowerCase().includes(this.state.searchValue.toLowerCase()))
+              .map((book) => (
+                <Col key={book.asin}>
+                  <SingleBook img={book.img} title={book.title} price={book.price} />
                 </Col>
-              );
-            })}
+              ))}
           </Row>
         </Container>
       </>
